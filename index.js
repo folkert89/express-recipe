@@ -1,7 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const { recipes, users } = require('./routes') // this works because of the index file!
-
+const { recipes, users, sessions } = require('./routes') // this works because of the index file!
+const passport = require('./config/auth')
+//wat doet nou dat mongoose precies.kijkin de file?
 const PORT = process.env.PORT || 3030
 
 
@@ -10,10 +11,11 @@ let app = express()
 app
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
-
+  .use(passport.initialize())
  //routes
   .use(recipes)
   .use(users)
+  .use(sessions)
  //catch 404 and forward to error handler
   .use((req, res, next) => {
      const err = new Error('Not Found')
