@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const { recipes, users, sessions } = require('./routes') // this works because of the index file!
 const passport = require('./config/auth')
+const cors = require('cors')
 //wat doet nou dat mongoose precies.kijkin de file?
 const PORT = process.env.PORT || 3030
 
@@ -9,9 +10,11 @@ const PORT = process.env.PORT || 3030
 let app = express()
 
 app
+  .use(cors())
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
   .use(passport.initialize())
+
  //routes
   .use(recipes)
   .use(users)
